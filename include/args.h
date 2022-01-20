@@ -56,18 +56,6 @@ namespace cex {
             const char* which() const throw();
     };
 
-    class ArgOption {
-        public:
-            std::string help;
-            std::string defaults_to;
-            std::vector<std::string> allowed;
-
-            ArgOption(
-                const std::string &_help = "", const std::string &_defaults_to = "",
-                const std::vector<std::string> &_allowed = {}
-            );
-    };
-
     class ArgResults {
         public:
             std::unordered_map<std::string, bool> flag;
@@ -78,6 +66,17 @@ namespace cex {
 
     class ArgParser {
         private:
+            class ArgOption {
+                public:
+                    std::string help;
+                    std::string defaults_to;
+                    std::vector<std::string> allowed;
+
+                    ArgOption(
+                        const std::string &_help = "", const std::string &_defaults_to = "",
+                        const std::vector<std::string> &_allowed = {}
+                    );
+            };
             std::unordered_map<std::string, std::string> flags_;
             std::unordered_map<char, std::string> flags_abbr_;
             std::unordered_map<std::string, ArgOption> options_;

@@ -79,7 +79,7 @@ const char* cex::duplicate_argument::which() const throw() {
 // +------+
 
 // Option
-cex::ArgOption::ArgOption(
+cex::ArgParser::ArgOption::ArgOption(
     const std::string &_help,
     const std::string &_defaults_to,
     const std::vector<std::string> &_allowed
