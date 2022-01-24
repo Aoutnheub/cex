@@ -11,3 +11,4 @@ $ cmake --install . --config Release
 ## Libraries
 
 - `args` : Command line argument parser
+- `colors`: Colored terminal output

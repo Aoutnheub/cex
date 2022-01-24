@@ -6,3 +6,8 @@ add_library(cexargs STATIC src/args.cpp)
 set(_ARGS_HEADERS "include/args.h")
 set_target_properties(cexargs PROPERTIES PUBLIC_HEADER "${_ARGS_HEADERS}")
 INSTALL(TARGETS cexargs PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
+
+add_library(cexcolors STATIC src/args.cpp)
+set(_COLORS_HEADERS "include/colors.h")
+set_target_properties(cexcolors PROPERTIES PUBLIC_HEADER "${_COLORS_HEADERS}")
+INSTALL(TARGETS cexcolors PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
