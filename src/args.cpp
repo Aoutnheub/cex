@@ -399,15 +399,29 @@ cex::ArgResults cex::ArgParser::parse(const std::vector<std::string> &_args) {
                                 }
                                 ++i;
                             }
-                        }else { // multiple flags
-                            for(std::size_t ii = 1; ii < _args[i].length(); ++ii) {
-                                auto fl = flags_abbr_.find(_args[i][ii]);
-                                if(fl != flags_abbr_.end()) {
-                                    results.flag.at(fl->second) = true;
+                        }else { // option and value with no space
+                            auto op = options_abbr_.find(_args[i][1]);
+                            if(op != options_abbr_.end()) {
+                                std::string temp = _args[i].substr(2);
+                                if(isAllowedOptionValue(op->second, temp)) {
+                                    results.option.at(op->second) = temp;
                                 }else {
-                                    std::string temp;
-                                    temp += _args[i][ii];
-                                    throw cex::invalid_argument(temp, "flag \""+temp+"\" does not exist");
+                                    temp = "";
+                                    temp += _args[i][1];
+                                    throw cex::missing_value(temp);
+                                }
+                            }else { // multiple flags
+                                for(std::size_t ii = 1; ii < _args[i].length(); ++ii) {
+                                    auto fl = flags_abbr_.find(_args[i][ii]);
+                                    if(fl != flags_abbr_.end()) {
+                                        results.flag.at(fl->second) = true;
+                                    }else {
+                                        std::string temp;
+                                        temp += _args[i][ii];
+                                        throw cex::invalid_argument(
+                                            temp, "flag \"" + temp + "\" does not exist"
+                                        );
+                                    }
                                 }
                             }
                             ++i;
