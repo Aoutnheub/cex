@@ -2,8 +2,6 @@ A collection of small libraries.
 
 ## Build and install
 
-### Without tests
-
 ```
 git clone https://github.com/Aoutnheub/cex.git && cd cex
 ```
