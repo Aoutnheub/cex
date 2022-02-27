@@ -11,3 +11,8 @@ add_library(cexcolors STATIC src/args.cpp)
 set(_COLORS_HEADERS "include/colors.h")
 set_target_properties(cexcolors PROPERTIES PUBLIC_HEADER "${_COLORS_HEADERS}")
 INSTALL(TARGETS cexcolors PUBLIC_HEADER DESTINATION include/${PROJECT_NAME})
+
+if(BUILD_TESTS)
+    add_executable(args_test "test/args.cpp" "src/args.cpp")
+    add_executable(colors_test "test/colors.cpp" "src/colors.cpp")
+endif()
