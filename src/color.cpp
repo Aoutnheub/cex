@@ -1,7 +1,7 @@
 #ifdef _WIN32
 #include <windows.h>
 #endif
-#include "../include/colors.h"
+#include "../include/color.h"
 
 cex::Color::Color() {}
 

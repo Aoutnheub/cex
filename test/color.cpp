@@ -1,4 +1,4 @@
-#include "../include/colors.h"
+#include "../include/color.h"
 
 int main(int argc, char **argv) {
     cex::Color::set(cex::Color::BG_White);
