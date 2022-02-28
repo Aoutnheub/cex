@@ -147,6 +147,16 @@ namespace cex {
                 return x_ * _vec.x() + y_ * _vec.y() + z_ * _vec.z();
             }
 
+            Vector3D<T> cross(Vector3D<T> _vec) {
+                Vector3D<T> vec(
+                    y_ * _vec.z() - z_ * _vec.y(),
+                    z_ * _vec.x() - x_ * _vec.z(),
+                    x_ * _vec.y() - y_ * _vec.x()
+                );
+
+                return vec;
+            }
+
             Vector3D<T> operator+(Vector3D<T> &_vec) {
                 return Vector3D<T>(x_ + _vec.x(), y_ + _vec.y(), z_ + _vec.z());
             }

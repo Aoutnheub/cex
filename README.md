@@ -38,6 +38,6 @@ cmake --install . --config Release
 - [ ] `hash` : Hashing algorithms
 - [ ] `html` : HTML parser
 - [ ] `json` : JSON parser
-- [x] `vector` : 2D/3D vectors
+- [x] `vector` : 2D/3D/4D vectors
 - [ ] `sort` : Sorting algorithms
 - [ ] `uuid` : UUID generator
