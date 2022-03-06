@@ -61,6 +61,7 @@ Can be used like this:
   - `--test option1` or `--test option2` etc.
   - `-t option1` or `-t option2` etc.
   - `-abct option1` or `-bact option2` etc. (with other flags: a, b, c; **MUST BE POSITIONED AT THE END**)
+  - `-toption1` or `-toption2` etc.
 
 Can be accessed from `ArgResults` with `.option["test"]`
 
