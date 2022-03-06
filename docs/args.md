@@ -13,7 +13,7 @@
 
 ### Constructor
 
-`ArgParser(const std::string &_name = "", const std::string &_description = "")`
+**`ArgParser(const std::string &_name = "", const std::string &_description = "")`**
 
   - `_name` : Name of the application; used for the `help` function
   - `_description` : Description of the application; used for the `help` function
@@ -60,7 +60,7 @@ Can be used like this:
 
   - `--test option1` or `--test option2` etc.
   - `-t option1` or `-t option2` etc.
-  - `-abct option1` or `-bact option2` etc. (with other flags: a, b, c; MUST BE POSITIONED AT THE END)
+  - `-abct option1` or `-bact option2` etc. (with other flags: a, b, c; **MUST BE POSITIONED AT THE END**)
 
 Can be accessed from `ArgResults` with `.option["test"]`
 
@@ -78,7 +78,7 @@ parser.addCommand("test", "This is a test command");
 
 Can be used like this:
 
-  - `./app.exe test <other arguments>` (MUST BE THE FIRST ARGUMENT)
+  - `./app.exe test <other arguments>` (**MUST BE THE FIRST ARGUMENT**)
 
 Can be accessed from `ArgResults` with `.command`
 
@@ -127,5 +127,5 @@ OPTIONS
 
 ### Variables
 
-  - `unsigned max_line_length = 80` : Restrict the formated help text to X columns
+  - `unsigned max_line_length = 80` : Restrict the formated help text to _X_ columns
   - `bool command_required = false` : Throw a `cex::missing_value` if no command is given
