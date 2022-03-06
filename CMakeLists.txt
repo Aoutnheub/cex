@@ -16,6 +16,6 @@ set(_VECTOR_HEADERS "include/vector.h")
 INSTALL(FILES ${_VECTOR_HEADERS} DESTINATION include/${PROJECT_NAME})
 
 if(BUILD_TESTS)
-    add_executable(args_test "test/args.cpp" "src/args.cpp")
-    add_executable(color_test "test/color.cpp" "src/color.cpp")
+    add_executable(args_test "tests/args.cpp" "src/args.cpp")
+    add_executable(color_test "tests/color.cpp" "src/color.cpp")
 endif()
