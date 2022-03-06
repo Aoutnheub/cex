@@ -20,7 +20,7 @@
 
 ### Functions
 
-#### `void addFlag(const std::string &_name, const std::string &_help = "", const char &_abbr = '\0')`
+**`void addFlag(const std::string &_name, const std::string &_help = "", const char &_abbr = '\0')`**
 
   - `_name` : Flag name; throws a `cex::duplicate_argument` exception if the name already exists
   - `_help` : Flag description; used for the `help` function
@@ -41,7 +41,7 @@ Can be used like this:
 
 Can be accessed from `ArgResults` with `.flag["test"]`
 
-#### `void addOption(const std::string &_name, const std::string &_help = "", const char &_abbr = '\0', const std::string &_defaults_to = "", const std::vector<std::string> &_allowed = {})`
+**`void addOption(const std::string &_name, const std::string &_help = "", const char &_abbr = '\0', const std::string &_defaults_to = "", const std::vector<std::string> &_allowed = {})`**
 
   - `_name` : Option name; throws a `cex::duplicate_argument` exception if the name already exists
   - `_help` : Option description; used for the `help` function
@@ -64,7 +64,7 @@ Can be used like this:
 
 Can be accessed from `ArgResults` with `.option["test"]`
 
-#### `void addCommand(const std::string &_name, const std::string &_help = "")`
+**`void addCommand(const std::string &_name, const std::string &_help = "")`**
 
   - `_name` : Command name; throws a `cex::duplicate_argument` exception if the name already exists
   - `_help` : Command description; used for the `help` function
@@ -82,9 +82,9 @@ Can be used like this:
 
 Can be accessed from `ArgResults` with `.command`
 
-#### `ArgResults parse(const std::vector<std::string> &_args)`
+**`ArgResults parse(const std::vector<std::string> &_args)`**
 
-#### `ArgResults parse(char **_args, const std::size_t _size)`
+**`ArgResults parse(char **_args, const std::size_t _size)`**
 
   - `_args` : vector or array of arguments to be parsed
   - `_size` : size of the array if `_args` is an array
@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 }
 ```
 
-#### `std::string help()`
+**`std::string help()`**
 
 Returns a formated string with the help for all the flags, options and commands.
 
