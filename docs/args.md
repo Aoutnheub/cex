@@ -5,9 +5,29 @@
     - addFlag()
     - addOption()
     - addCommand()
+    - parse()
     - help()
+    - helpString()
     - max_line_length
     - command_required
+    - commands_help_msg
+    - flags_help_msg
+    - options_help_msg
+    - colors
+    - title_color
+    - description_color
+    - header_color
+    - commands_color
+    - commands_description_color
+    - flags_color
+    - flags_description_color
+    - options_color
+    - options_description_color
+  - ArgResults
+    - flag
+    - option
+    - positional
+    - command
 
 ## ArgParser
 
@@ -100,9 +120,9 @@ int main(int argc, char **argv) {
 }
 ```
 
-**`std::string help()`**
+**`void help()`**
 
-Returns a formated string with the help for all the flags, options and commands.
+Prints the help for all the flags, options and commands
 
 **Format**
 
@@ -126,7 +146,35 @@ OPTIONS
 
 ```
 
+**`std::string helpString()`**
+
+Returns a formated string with the help for all the flags, options and commands.
+
 ### Variables
 
   - `unsigned max_line_length = 80` : Restrict the formated help text to _X_ columns
   - `bool command_required = false` : Throw a `cex::missing_value` if no command is given
+  - `std::string commands_help_msg = "COMMANDS"` : Message displayed before commands for help
+  - `std::string flags_help_msg = "FLAGS"` : Message displayed before flags for help
+  - `std::string options_help_msg = "OPTIONS"` : Message displayed before options for help
+  - `bool colors = false` : Toggle colorful help output on and off
+  - `Color::ColorCode title_color = Color::Green` : Color of the app name
+  - `Color::ColorCode description_color = Color::White` : Color of the description
+  - `Color::ColorCode header_color = Color::White` : Color for `commands_help_msg`, `flags_help_msg` and `options_help_msg`
+  - `Color::ColorCode commands_color = Color::Magenta` : Color for the command names
+  - `Color::ColorCode commands_description_color = Color::White` : Color for the command descriptions
+  - `Color::ColorCode flags_color = Color::Blue` : Color for the flag names
+  - `Color::ColorCode flags_description_color = Color::White` : Color for the flag descriptions
+  - `Color::ColorCode options_color = Color::Blue` : Color for the option names
+  - `Color::ColorCode options_description_color = Color::White` : Color for the options descriptions
+
+## ArgResults
+
+### Variables
+
+ - `std::unordered_map<std::string, bool> flag` : Stores the flags
+ - `std::unordered_map<std::string, std::string> option` : Stores the options
+ - `std::vector<std::string> positional` : Stores the positional arguments
+ - `std::string command` : Stores the command
+
+**Flags and options can only be accessed by name not abbreviation**
