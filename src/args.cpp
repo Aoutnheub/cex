@@ -210,13 +210,19 @@ void cex::ArgParser::addCommand(const std::string &_name, const std::string &_he
     }
 }
 
-std::string cex::ArgParser::help() {
-    std::string helpful;
+void cex::ArgParser::help() {
     if(!name_.empty()) {
-        helpful += name_;
+        if(colors) {
+            Color::set(title_color);
+            std::cout << name_;
+            Color::clear();
+        }else {
+            std::cout << name_;
+        }
     }
     if(!description_.empty()) {
-        helpful += " - ";
+        if(colors) Color::set(description_color);
+        std::cout << " - ";
         if(max_line_length != 0) {
             std::size_t desc_len = description_.length();
             std::size_t line_len = max_line_length - name_.length() - 3;
@@ -225,93 +231,238 @@ std::string cex::ArgParser::help() {
                 for(std::size_t i = 0; i < name_.length() + 3; ++i) {
                     indent += " ";
                 }
-                helpful += indent + description_.substr(0, line_len) + '\n';
+                std::cout << indent << description_.substr(0, line_len) << '\n';
                 unsigned cuts = 1;
                 while(true) {
                     if(cuts * line_len + line_len > desc_len) {
-                        helpful += indent + description_.substr(cuts * line_len) + '\n';
+                        std::cout << indent << description_.substr(cuts * line_len) << '\n';
                         break;
                     }else {
-                        helpful += indent + description_.substr(cuts * line_len, line_len);
+                        std::cout << indent << description_.substr(cuts * line_len, line_len);
                     }
                 }
             }else {
-                helpful += description_ + '\n';
+                std::cout << description_ << '\n';
             }
         }
+        if(colors) Color::clear();
     }
-    helpful += "\n";
+    std::cout << "\n";
 
     if(!commands_.empty()) {
         if(!commands_help_msg.empty())
-            helpful += commands_help_msg + "\n\n";
-        for(auto i = commands_.begin(); i != commands_.end(); ++i) {
-            helpful += "    "+i->first+'\n';
-            std::string indent = "        ";
-            if(i->second.length() > max_line_length - 8) {
-                splitDesc(helpful, i->second);
+            if(colors) {
+                Color::set(header_color);
+                std::cout << commands_help_msg << "\n\n";
+                Color::clear();
             }else {
-                helpful += indent + i->second + '\n';
+                std::cout << commands_help_msg << "\n\n";
             }
-            helpful += '\n';
+        for(auto i = commands_.begin(); i != commands_.end(); ++i) {
+            if(colors) Color::set(commands_color);
+            std::cout << "    " << i->first << '\n';
+            std::string indent = "        ";
+            if(colors) {
+                Color::clear();
+                Color::set(commands_description_color);
+            }
+            if(i->second.length() > max_line_length - 8) {
+                std::string tmp;
+                splitDesc(tmp, i->second);
+                std::cout << tmp;
+            }else {
+                std::cout << indent << i->second << '\n';
+            }
+            if(colors) Color::clear();
+            std::cout << '\n';
         }
     }
 
     if(!flags_.empty()) {
         std::unordered_map<std::string, char> abbr = getFlagsAbbr();
         if(!flags_help_msg.empty())
-            helpful += flags_help_msg + "\n\n";
+            if(colors) {
+                Color::set(header_color);
+                std::cout << flags_help_msg << "\n\n";
+                Color::clear();
+            }else {
+                std::cout << flags_help_msg << "\n\n";
+            }
         for(auto i = flags_.begin(); i != flags_.end(); ++i) {
-            helpful += "    --" + i->first;
+            if(colors) Color::set(flags_color);
+            std::cout << "    --" + i->first;
             auto tmp = abbr.find(i->first);
             if(tmp != abbr.end()) {
-                helpful += ", -";
-                helpful += tmp->second;
+                std::cout << ", -" << tmp->second;
             }
-            helpful += '\n';
+            std::cout << '\n';
             std::string indent = "        ";
-            if(i->second.length() > max_line_length - 8) {
-                splitDesc(helpful, i->second);
-            }else {
-                helpful += indent + i->second + '\n';
+            if(colors) {
+                Color::clear();
+                Color::set(flags_description_color);
             }
-            helpful += '\n';
+            if(i->second.length() > max_line_length - 8) {
+                std::string tmp;
+                splitDesc(tmp, i->second);
+                std::cout << tmp;
+            }else {
+                std::cout << indent + i->second + '\n';
+            }
+            if(colors) Color::clear();
+            std::cout << '\n';
         }
     }
 
     if(!options_.empty()) {
         std::unordered_map<std::string, char> abbr = getOptionsAbbr();
         if(!options_help_msg.empty())
-            helpful += options_help_msg + "\n\n";
+            if(colors) {
+                Color::set(header_color);
+                std::cout << options_help_msg << "\n\n";
+                Color::clear();
+            }else {
+                std::cout << options_help_msg << "\n\n";
+            }
         for(auto i = options_.begin(); i != options_.end(); ++i) {
-            helpful += "    --" + i->first;
+            if(colors) Color::set(options_color);
+            std::cout << "    --" + i->first;
             auto tmp = abbr.find(i->first);
             if(tmp != abbr.end()) {
-                helpful += ", -";
-                helpful += tmp->second;
+                std::cout << ", -" << tmp->second;
             }
             if(!i->second.allowed.empty()) {
-                helpful += " ";
+                std::cout << " ";
                 for(std::size_t ii = 0; ii < i->second.allowed.size(); ++ii) {
                     if(ii != i->second.allowed.size() - 1) {
-                        helpful += i->second.allowed[ii] + "|";
+                        std::cout << i->second.allowed[ii] + "|";
                     }else {
-                        helpful += i->second.allowed[ii];
+                        std::cout << i->second.allowed[ii];
                     }
                 }
             }
-            helpful += '\n';
+            std::cout << '\n';
             std::string indent = "        ";
-            if(i->second.help.length() > max_line_length - 8) {
-                splitDesc(helpful, i->second.help);
-            }else {
-                helpful += indent + i->second.help + '\n';
+            if(colors) {
+                Color::clear();
+                Color::set(options_description_color);
             }
-            helpful += '\n';
+            if(i->second.help.length() > max_line_length - 8) {
+                std::string tmp;
+                splitDesc(tmp, i->second.help);
+                std::cout << tmp;
+            }else {
+                std::cout << indent + i->second.help + '\n';
+            }
+            if(colors) Color::clear();
+            std::cout << '\n';
+        }
+    }
+}
+
+std::string cex::ArgParser::helpString() {
+    if(!cached_help.empty()) {
+        return cached_help;
+    }
+    if(!name_.empty()) {
+        cached_help += name_;
+    }
+    if(!description_.empty()) {
+        cached_help += " - ";
+        if(max_line_length != 0) {
+            std::size_t desc_len = description_.length();
+            std::size_t line_len = max_line_length - name_.length() - 3;
+            if(description_.length() > max_line_length - name_.length() - 3) {
+                std::string indent;
+                for(std::size_t i = 0; i < name_.length() + 3; ++i) {
+                    indent += " ";
+                }
+                cached_help += indent + description_.substr(0, line_len) + '\n';
+                unsigned cuts = 1;
+                while(true) {
+                    if(cuts * line_len + line_len > desc_len) {
+                        cached_help += indent + description_.substr(cuts * line_len) + '\n';
+                        break;
+                    }else {
+                        cached_help += indent + description_.substr(cuts * line_len, line_len);
+                    }
+                }
+            }else {
+                cached_help += description_ + '\n';
+            }
+        }
+    }
+    cached_help += "\n";
+
+    if(!commands_.empty()) {
+        if(!commands_help_msg.empty())
+            cached_help += commands_help_msg + "\n\n";
+        for(auto i = commands_.begin(); i != commands_.end(); ++i) {
+            cached_help += "    "+i->first+'\n';
+            std::string indent = "        ";
+            if(i->second.length() > max_line_length - 8) {
+                splitDesc(cached_help, i->second);
+            }else {
+                cached_help += indent + i->second + '\n';
+            }
+            cached_help += '\n';
         }
     }
 
-    return helpful;
+    if(!flags_.empty()) {
+        std::unordered_map<std::string, char> abbr = getFlagsAbbr();
+        if(!flags_help_msg.empty())
+            cached_help += flags_help_msg + "\n\n";
+        for(auto i = flags_.begin(); i != flags_.end(); ++i) {
+            cached_help += "    --" + i->first;
+            auto tmp = abbr.find(i->first);
+            if(tmp != abbr.end()) {
+                cached_help += ", -";
+                cached_help += tmp->second;
+            }
+            cached_help += '\n';
+            std::string indent = "        ";
+            if(i->second.length() > max_line_length - 8) {
+                splitDesc(cached_help, i->second);
+            }else {
+                cached_help += indent + i->second + '\n';
+            }
+            cached_help += '\n';
+        }
+    }
+
+    if(!options_.empty()) {
+        std::unordered_map<std::string, char> abbr = getOptionsAbbr();
+        if(!options_help_msg.empty())
+            cached_help += options_help_msg + "\n\n";
+        for(auto i = options_.begin(); i != options_.end(); ++i) {
+            cached_help += "    --" + i->first;
+            auto tmp = abbr.find(i->first);
+            if(tmp != abbr.end()) {
+                cached_help += ", -";
+                cached_help += tmp->second;
+            }
+            if(!i->second.allowed.empty()) {
+                cached_help += " ";
+                for(std::size_t ii = 0; ii < i->second.allowed.size(); ++ii) {
+                    if(ii != i->second.allowed.size() - 1) {
+                        cached_help += i->second.allowed[ii] + "|";
+                    }else {
+                        cached_help += i->second.allowed[ii];
+                    }
+                }
+            }
+            cached_help += '\n';
+            std::string indent = "        ";
+            if(i->second.help.length() > max_line_length - 8) {
+                splitDesc(cached_help, i->second.help);
+            }else {
+                cached_help += indent + i->second.help + '\n';
+            }
+            cached_help += '\n';
+        }
+    }
+
+    return cached_help;
 }
 
 cex::ArgResults cex::ArgParser::parse(const std::vector<std::string> &_args) {

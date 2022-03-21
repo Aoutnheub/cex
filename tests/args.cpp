@@ -12,11 +12,22 @@ int main(int argc, char **argv) {
     parser.addOption("type", "Test option", 't', "type1", {"type1", "type2"});
     parser.addOption("count", "Test option", '\0', "1", {});
 
+    // parser.commands_help_msg = "";
+    // parser.flags_help_msg = "";
+    // parser.options_help_msg = "";
+    // parser.colors = true;
+    parser.description_color = cex::Color::Yellow;
+    parser.header_color = cex::Color::Red;
+    parser.commands_description_color = cex::Color::Yellow;
+    parser.flags_description_color = cex::Color::Yellow;
+    parser.options_description_color = cex::Color::Yellow;
+
     // parser.command_required = true;
     cex::ArgResults results = parser.parse(argv + 1, argc - 1);
 
     if(results.flag["help"]) {
-        std::cout << parser.help();
+        // std::cout << parser.helpString();
+        parser.help();
     }else {
         std::cout << "command: " << results.command << "\n\n";
         std::cout << "flags\n-----------\n";

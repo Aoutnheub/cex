@@ -4,6 +4,7 @@
 #include <unordered_map>
 #include <cstring>
 #include <cerrno>
+#include "./color.h"
 
 namespace cex {
     class invalid_argument : public std::exception {
@@ -85,6 +86,7 @@ namespace cex {
             std::vector<std::string> positional_;
             std::string name_;
             std::string description_;
+            std::string cached_help;
 
             std::unordered_map<std::string, char> getFlagsAbbr();
             std::unordered_map<std::string, char> getOptionsAbbr();
@@ -97,6 +99,16 @@ namespace cex {
             std::string commands_help_msg = "COMMANDS";
             std::string flags_help_msg = "FLAGS";
             std::string options_help_msg = "OPTIONS";
+            bool colors = false;
+            Color::ColorCode title_color = Color::Green;
+            Color::ColorCode description_color = Color::White;
+            Color::ColorCode header_color = Color::White;
+            Color::ColorCode commands_color = Color::Magenta;
+            Color::ColorCode commands_description_color = Color::White;
+            Color::ColorCode flags_color = Color::Blue;
+            Color::ColorCode flags_description_color = Color::White;
+            Color::ColorCode options_color = Color::Blue;
+            Color::ColorCode options_description_color = Color::White;
 
             ArgParser(const std::string &_name = "", const std::string &_description = "");
             ~ArgParser();
@@ -111,7 +123,8 @@ namespace cex {
                 const std::vector<std::string> &_allowed = {}
             );
             void addCommand(const std::string &_name, const std::string &_help = "");
-            std::string help();
+            void help();
+            std::string helpString();
             ArgResults parse(const std::vector<std::string> &_args);
             ArgResults parse(char **_args, const std::size_t _size);
     };
