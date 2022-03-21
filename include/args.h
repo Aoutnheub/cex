@@ -94,6 +94,9 @@ namespace cex {
         public:
             unsigned max_line_length = 80;
             bool command_required = false;
+            std::string commands_help_msg = "COMMANDS";
+            std::string flags_help_msg = "FLAGS";
+            std::string options_help_msg = "OPTIONS";
 
             ArgParser(const std::string &_name = "", const std::string &_description = "");
             ~ArgParser();

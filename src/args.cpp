@@ -243,7 +243,8 @@ std::string cex::ArgParser::help() {
     helpful += "\n";
 
     if(!commands_.empty()) {
-        helpful += "COMMANDS\n\n";
+        if(!commands_help_msg.empty())
+            helpful += commands_help_msg + "\n\n";
         for(auto i = commands_.begin(); i != commands_.end(); ++i) {
             helpful += "    "+i->first+'\n';
             std::string indent = "        ";
@@ -258,7 +259,8 @@ std::string cex::ArgParser::help() {
 
     if(!flags_.empty()) {
         std::unordered_map<std::string, char> abbr = getFlagsAbbr();
-        helpful += "FLAGS\n\n";
+        if(!flags_help_msg.empty())
+            helpful += flags_help_msg + "\n\n";
         for(auto i = flags_.begin(); i != flags_.end(); ++i) {
             helpful += "    --" + i->first;
             auto tmp = abbr.find(i->first);
@@ -279,7 +281,8 @@ std::string cex::ArgParser::help() {
 
     if(!options_.empty()) {
         std::unordered_map<std::string, char> abbr = getOptionsAbbr();
-        helpful += "OPTIONS\n\n";
+        if(!options_help_msg.empty())
+            helpful += options_help_msg + "\n\n";
         for(auto i = options_.begin(); i != options_.end(); ++i) {
             helpful += "    --" + i->first;
             auto tmp = abbr.find(i->first);
