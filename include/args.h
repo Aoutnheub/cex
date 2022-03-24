@@ -91,10 +91,8 @@ namespace cex {
             std::unordered_map<std::string, char> getFlagsAbbr();
             std::unordered_map<std::string, char> getOptionsAbbr();
             bool isAllowedOptionValue(const std::string &_opt, const std::string &_val);
-            void splitDesc(std::string &_help, std::string &_desc);
 
         public:
-            unsigned max_line_length = 80;
             bool command_required = false;
             std::string commands_help_msg = "COMMANDS";
             std::string flags_help_msg = "FLAGS";
